@@ -26,3 +26,54 @@
 - Typical toolchains: Hardhat / Foundry / Remix for compile & deploy
 
 ---
+
+## Configuration & Owner Workflow
+
+### Owner Functions
+
+- `addToken(IERC20 token, uint256 weight)` — Add a tracked token.
+- `setTokenWeight(uint256 idx, uint256 newWeight)` — Change a token's weight.
+- `setRewardRate(uint256 newRate)` — Set the per-second scaled rate.
+- `depositRewards(uint256 amount)` — Deposit reward tokens into the contract.
+- `WithdrawRewardTokens(uint256 amount)` — Emergency withdrawal by owner.
+
+### User Actions
+
+- `updateRewards()` — Update (and persist) accrued rewards without claiming.
+- `claim()` — Claim all pending rewards (transfers tokens out).
+- `pendingRewards(address user)` — View pending rewards (read-only).
+
+---
+
+## Important Notes & Security
+
+- The owner controls key parameters (tracked tokens, weights, reward rate) — using a multisig for the owner address is recommended to reduce centralization and operational risk.
+- Token balance checks loop through `trackedTokens`; `MAX_TRACKED = 20` prevents unbounded loops but keep the tracked set small for gas efficiency.
+- Uses OpenZeppelin `SafeERC20` and `ReentrancyGuard` to mitigate common token & reentrancy risks.
+- Ensure the contract is funded with enough `rewardToken` before users attempt to claim.
+- The contract snapshots `lastBalanceSum` on first interaction — users who never call `updateRewards`/`claim` won’t be initialized until they interact; this is expected behavior.
+
+---
+
+## Testing Suggestions
+
+- Unit tests should cover: accrual over time, multiple tokens/weights, zero balances, deposit/withdraw flows, owner-only restrictions, and reentrancy/edge cases.
+- Simulate time passage with your test runner (Hardhat `evm_increaseTime` / Foundry `warp`) and assert expected `pendingRewards` values.
+
+---
+
+## Example Usage Flow
+
+1. Owner deploys contract with `rewardToken` and `rewardRatePerSecond`.
+2. Owner calls `addToken(...)` for each ERC-20 to track and sets weights.
+3. Owner `depositRewards(...)` to fund the contract.
+4. Users call `updateRewards()` (optional) and `claim()` to withdraw accrued rewards.
+5. Owner adjusts weights or reward rate as needed (consider notifying users off-chain).
+"""
+
+# Append the content to the existing README.md file
+with open("/mnt/data/README.md", "a", encoding="utf-8") as f:
+    f.write(additional_content)
+
+"/mnt/data/README.md"
+
