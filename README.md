@@ -71,9 +71,4 @@
 5. Owner adjusts weights or reward rate as needed (consider notifying users off-chain).
 """
 
-# Append the content to the existing README.md file
-with open("/mnt/data/README.md", "a", encoding="utf-8") as f:
-    f.write(additional_content)
-
-"/mnt/data/README.md"
 
