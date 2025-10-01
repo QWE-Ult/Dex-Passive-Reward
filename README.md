@@ -70,5 +70,8 @@
 4. Users call `updateRewards()` (optional) and `claim()` to withdraw accrued rewards.
 5. Owner adjusts weights or reward rate as needed (consider notifying users off-chain).
 """
+## License
 
+This project is licensed under the **MIT License**. See [LICENSE.md](./LICENSE.md) for details.
+"""
 
