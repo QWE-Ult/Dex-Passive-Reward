@@ -164,4 +164,29 @@ function _currentBalanceSum(address user) internal view returns (uint256) {
 }
 }
 
+///
+///1)Fund the contract with reward tokens
+
+///i)The contract must be funded using depositRewards(amount) before any user can claim rewards.
+
+///ii)Ensure the owner has approved the contract to transfer the reward tokens via approve().
+
+///2)Add tracked tokens with appropriate weights
+
+///i)Use addToken(token, weight) to register each ERC20 token users will be rewarded for holding.
+
+///ii)Make sure each token has a non-zero weight, and do not exceed the MAX_TRACKED limit (20 tokens).
+
+///3)Set a realistic reward rate per second
+
+///i)Use setRewardRate(newRate) to define the distribution speed of rewards.
+
+///ii)The value must be scaled by 1e18 and should match your tokenomics (e.g., (totalRewards * 1e18) / durationInSeconds).
+
+///4)Ensure users manually update rewards
+
+///i)Users must call updateRewards() to accrue up-to-date rewards before claiming.
+
+///ii)Since rewards are not automatically updated on token transfers, manual updates are necessary for accurate accrual.
+
 
